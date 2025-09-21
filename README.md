@@ -1,19 +1,20 @@
 
-[<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-alt="Pushback App"
-height="40">](https://apps.apple.com/us/app/id6615073345)
-
 # NoLetServer
 
 [English](./README_EN.md) | [日本語](./README_JP.md) | [한국어](./README_KR.md)
 
 ## 安装与运行
 
+| App Store | Server Works  |
+|--------|-------|
+| [<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Pushback App" height="40">](https://apps.apple.com/us/app/id6615073345) | [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/sunvc/NoLets-worker) |
+
+
 ### 从GitHub Releases下载
 
 您可以从GitHub Releases页面下载预编译的二进制文件：
 
-1. 访问 [GitHub Releases](https://github.com/sunvc/NoLeterver/releases) 页面
+1. 访问 [GitHub Releases](https://github.com/sunvc/NoLetserver/releases) 页面
 2. 根据您的操作系统和架构选择合适的版本下载：
    - Windows (amd64)
    - macOS (amd64, arm64)
@@ -24,10 +25,10 @@ height="40">](https://apps.apple.com/us/app/id6615073345)
 5. 运行程序：
    ```bash
    # Linux/macOS
-   ./NoLetServer --config your_config.yaml
+   ./NoLets --config your_config.yaml
    
    # Windows
-   NoLetServer.exe --config your_config.yaml
+   NoLets.exe --config your_config.yaml
    ```
 
    常用参数：
@@ -71,7 +72,7 @@ docker run -d --name NoLet-server \
 services:
   NoLetServer:
     image: ghcr.io/sunvc/nolet:latest
-    container_name: NoLetServer
+    container_name: NoLets
     restart: always
     ports:
       - "8080:8080"
@@ -93,35 +94,36 @@ docker-compose up -d
 
 ```yaml
 system:
-  user: ""                  # 基础认证用户名
-  password: ""              # 基础认证密码
-  addr: "0.0.0.0:8080"      # 服务器监听地址
-  url_prefix: "/"           # 服务URL前缀
-  data: "./data"            # 数据存储目录
-  name: "NoLetServer"            # 服务名称
-  dsn: ""                   # MySQL DSN连接字符串
-  cert: ""                  # TLS证书路径
-  key: ""                   # TLS证书私钥路径
-  reduce_memory_usage: false # 降低内存占用（增加CPU消耗）
-  proxy_header: ""          # HTTP头中远程IP地址来源
-  max_batch_push_count: -1  # 批量推送最大数量，-1表示无限制
-  max_apns_client_count: 1  # 最大APNs客户端连接数
-  concurrency: 262144       # 最大并发连接数（256 * 1024）
-  read_timeout: 3s          # 读取超时时间
-  write_timeout: 3s         # 写入超时时间
-  idle_timeout: 10s         # 空闲超时时间
-  admins: []                # 管理员ID列表
-  debug: true               # 启用调试模式
-  expired: 0                # 语音过期时间（秒）
-  icp_info: ""              # ICP备案信息
-  time_zone: "UTC"          # 时区设置
+  user: ""                         # 基础认证用户名
+  password: ""                     # 基础认证密码
+  addr: "0.0.0.0:8080"             # 服务器监听地址
+  url_prefix: "/"                  # 服务URL前缀
+  data: "./data"                   # 数据存储目录
+  name: "NoLets"                   # 服务名称
+  dsn: ""                          # MySQL DSN连接字符串
+  cert: ""                         # TLS证书路径
+  key: ""                          # TLS证书私钥路径
+  reduce_memory_usage: false       # 降低内存占用（增加CPU消耗）
+  proxy_header: ""                 # HTTP头中远程IP地址来源
+  max_batch_push_count: -1         # 批量推送最大数量，-1表示无限制
+  max_apns_client_count: 1         # 最大APNs客户端连接数
+  max_device_key_arr_length: 10    # 最大key列表数量
+  concurrency: 262144              # 最大并发连接数（256 * 1024）
+  read_timeout: 3s                 # 读取超时时间
+  write_timeout: 3s                # 写入超时时间
+  idle_timeout: 10s                # 空闲超时时间
+  admins: [ ]                      # 管理员ID列表
+  debug: true                      # 启用调试模式
+  expired: 0                       # 语音过期时间（秒）
+  icp_info: ""                     # ICP备案信息
+  time_zone: "UTC"                 # 时区设置
 
 apple:
-  apnsPrivateKey: ""        # APNs私钥内容或路径
-  topic: ""                 # APNs Topic
-  keyID: ""                 # APNs Key ID
-  teamID: ""                # APNs Team ID
-  develop: false            # 启用APNs开发环境
+  apnsPrivateKey: ""               # APNs私钥内容或路径
+  topic: ""                        # APNs Topic
+  keyID: ""                        # APNs Key ID
+  teamID: ""                       # APNs Team ID
+  develop: false                   # 启用APNs开发环境
 ```
 
 ## 服务配置方式
@@ -167,13 +169,13 @@ apple:
 
 2. 指定配置文件路径：
    ```bash
-    ./NoLetServer --config /path/to/your/config.yaml
+    ./NoLets --config /path/to/your/config.yaml
     # 或使用简写
-    ./NoLetServer -c /path/to/your/config.yaml
+    ./NoLets -c /path/to/your/config.yaml
     ```
 
 3. 配置文件与命令行参数混合使用：
    ```bash
    # 配置文件中的设置会被命令行参数覆盖
-   ./NoLetServer -c /path/to/your/config.yaml --debug --addr 127.0.0.1:8080
+   ./NoLets -c /path/to/your/config.yaml --debug --addr 127.0.0.1:8080
    ```

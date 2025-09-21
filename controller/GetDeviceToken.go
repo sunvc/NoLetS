@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sunvc/NoLet/common"
-	"github.com/sunvc/NoLet/database"
+	"github.com/sunvc/NoLets/common"
+	"github.com/sunvc/NoLets/database"
 )
 
 // GetDeviceToken 获取设备的推送token

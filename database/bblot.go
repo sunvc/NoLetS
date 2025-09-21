@@ -8,7 +8,7 @@ import (
 	"sync"
 
 	"github.com/lithammer/shortuuid/v3"
-	"github.com/sunvc/NoLet/common"
+	"github.com/sunvc/NoLets/common"
 	"go.etcd.io/bbolt"
 )
 

@@ -12,6 +12,7 @@ system:
   proxy_header: ""
   max_batch_push_count: -1
   max_apns_client_count: 1
+  max_device_key_arr_length: 10
   concurrency: 262144   # 256 * 1024
   read_timeout: 3s
   write_timeout: 3s

@@ -2,16 +2,18 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sunvc/NoLet/controller"
+	"github.com/sunvc/NoLets/controller"
 )
 
 func SetupRouter(router *gin.Engine) {
 
 	router.GET("/", controller.Home)
 	router.GET("/info", controller.Info)
+
 	// App内部使用
 	router.GET("/ping", controller.Ping)
 	router.GET("/health", controller.Health)
+	router.GET("/monitor", controller.GetServerInfo)
 
 	// 注册
 	router.GET("/register/:deviceKey", CheckUserAgent(), controller.Register)

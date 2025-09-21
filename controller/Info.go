@@ -3,10 +3,11 @@ package controller
 import (
 	"net/http"
 	"runtime"
+	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sunvc/NoLet/common"
-	"github.com/sunvc/NoLet/database"
+	"github.com/sunvc/NoLets/common"
+	"github.com/sunvc/NoLets/database"
 )
 
 func Info(c *gin.Context) {
@@ -27,3 +28,15 @@ func Info(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, results)
 }
+
+// Ping 处理心跳检测请求
+// 返回服务器当前状态
+func Ping(c *gin.Context) {
+	c.JSON(http.StatusOK, common.BaseResp{
+		Code:      http.StatusOK,
+		Message:   "pong",
+		Timestamp: time.Now().Unix(),
+	})
+}
+
+func Health(c *gin.Context) { c.String(http.StatusOK, "OK") }

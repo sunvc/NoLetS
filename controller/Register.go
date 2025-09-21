@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sunvc/NoLet/common"
-	"github.com/sunvc/NoLet/database"
+	"github.com/sunvc/NoLets/common"
+	"github.com/sunvc/NoLets/database"
 )
 
 // Register 处理设备注册请求
@@ -13,6 +13,7 @@ import (
 // GET: 检查设备key是否存在
 // POST: 注册新的设备token
 func Register(c *gin.Context) {
+
 	if c.Request.Method == "GET" {
 		deviceKey := c.Param("deviceKey")
 		if deviceKey == "" {
@@ -48,8 +49,8 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	if device.Token == "" {
-		c.JSON(http.StatusOK, common.Failed(http.StatusBadRequest, "deviceToken is empty"))
+	if len(device.Token) != 64 {
+		c.JSON(http.StatusOK, common.Failed(http.StatusBadRequest, "Invalid deviceToken"))
 		return
 	}
 

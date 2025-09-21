@@ -63,8 +63,12 @@ func NewParamsResult(c *gin.Context) *ParamsResult {
 
 	}
 
-	resultKeys = FilterShortStrings(resultKeys, 5)
+	resultKeys = FilterShortStrings(resultKeys, 5, 64)
 	main.Keys = Unique[string](resultKeys)
+
+	if len(main.Keys) > LocalConfig.System.MaxDeviceKeyArrLength {
+		main.Keys = main.Keys[:LocalConfig.System.MaxDeviceKeyArrLength]
+	}
 
 	var tokens []string
 	if token, ok := main.Params.Get(DeviceToken); ok {
@@ -73,8 +77,8 @@ func NewParamsResult(c *gin.Context) *ParamsResult {
 		}
 	}
 
-	tokens = FilterShortStrings(tokens, 5)
-	
+	tokens = FilterShortStrings(tokens, 60, 65)
+
 	main.Tokens = tokens
 
 	return main
@@ -286,13 +290,14 @@ func convenientProcessor(params *ParamsMap) {
 	if v, ok := params.Get(Markdown); ok {
 		params.Set(Body, v)
 		params.Set(Category, CategoryMarkdown)
-		params.Delete(MD)
+		params.Delete(Markdown)
+
 	}
 	// 如果存在 md 字段，将其转换为 body 并设置 category 为 markdown
 	if v, ok := params.Get(MD); ok {
 		params.Set(Body, v)
 		params.Set(Category, CategoryMarkdown)
-		params.Delete(Markdown)
+		params.Delete(MD)
 	}
 
 	// 规范化 category 字段

@@ -106,10 +106,10 @@ func IsFileInDirectory(dirPath, fileName string) (bool, error) {
 	return true, nil
 }
 
-func FilterShortStrings(input []string, maxNumber int) []string {
+func FilterShortStrings(input []string, minNumber, maxNumber int) []string {
 	var result []string
 	for _, s := range input {
-		if len(s) >= maxNumber {
+		if len(s) >= minNumber && len(s) <= maxNumber {
 			result = append(result, s)
 		}
 	}

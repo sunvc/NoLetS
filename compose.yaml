@@ -1,8 +1,8 @@
 
 services:
-  NoLetServer:
+  NoLets:
     image: ghcr.io/sunvc/nolet:latest
-    container_name: NoLetServer
+    container_name: NoLets
     restart: always
     ports:
       - "8080:8080"

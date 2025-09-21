@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sunvc/NoLet/common"
+	"github.com/sunvc/NoLets/common"
 	"github.com/sunvc/apns2"
 	"github.com/sunvc/apns2/payload"
 )
