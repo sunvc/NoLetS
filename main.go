@@ -37,7 +37,7 @@ func main() {
 
 	common.StaticFS = &staticFS
 	app := &cli.Command{
-		Name:    "NoLetServer",
+		Name:    "NoLets",
 		Usage:   "Push Server For NoLet",
 		Flags:   common.Flags(),
 		Authors: []any{"to@uuneo.com"},

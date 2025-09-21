@@ -24,10 +24,10 @@ height="40">](https://apps.apple.com/us/app/id6615073345)
 5. 运行程序：
    ```bash
    # Linux/macOS
-   ./NoLetServer --config your_config.yaml
+   ./NoLets --config your_config.yaml
    
    # Windows
-   NoLetServer.exe --config your_config.yaml
+   NoLets.exe --config your_config.yaml
    ```
 
    常用参数：
@@ -71,7 +71,7 @@ docker run -d --name NoLet-server \
 services:
   NoLetServer:
     image: ghcr.io/sunvc/nolet:latest
-    container_name: NoLetServer
+    container_name: NoLets
     restart: always
     ports:
       - "8080:8080"
@@ -98,7 +98,7 @@ system:
   addr: "0.0.0.0:8080"      # 服务器监听地址
   url_prefix: "/"           # 服务URL前缀
   data: "./data"            # 数据存储目录
-  name: "NoLetServer"            # 服务名称
+  name: "NoLets"            # 服务名称
   dsn: ""                   # MySQL DSN连接字符串
   cert: ""                  # TLS证书路径
   key: ""                   # TLS证书私钥路径
@@ -167,13 +167,13 @@ apple:
 
 2. 指定配置文件路径：
    ```bash
-    ./NoLetServer --config /path/to/your/config.yaml
+    ./NoLets --config /path/to/your/config.yaml
     # 或使用简写
-    ./NoLetServer -c /path/to/your/config.yaml
+    ./NoLets -c /path/to/your/config.yaml
     ```
 
 3. 配置文件与命令行参数混合使用：
    ```bash
    # 配置文件中的设置会被命令行参数覆盖
-   ./NoLetServer -c /path/to/your/config.yaml --debug --addr 127.0.0.1:8080
+   ./NoLets -c /path/to/your/config.yaml --debug --addr 127.0.0.1:8080
    ```
