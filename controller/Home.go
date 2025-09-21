@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sunvc/NoLet/common"
+	"github.com/sunvc/NoLets/common"
 )
 
 // Home 处理首页请求
@@ -27,5 +27,6 @@ func Home(c *gin.Context) {
 		"URL":     template.URL(url),
 		"LOGORAW": template.HTML(common.LOGORAW),
 		"LOGOSVG": template.URL(common.LogoSvgImage("ff00000f", false)),
+		"DOCS":    "https://wiki.wzs.app",
 	})
 }

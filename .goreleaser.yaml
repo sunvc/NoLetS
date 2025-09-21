@@ -1,6 +1,6 @@
 version: 2
 
-project_name: NoLetServer
+project_name: NoLets
 
 builds:
   - id: darwin
@@ -131,8 +131,11 @@ archives:
 
 release:
   github:
-    owner: uuneo
-    name: NoLetServer
+    owner: sunvc
+    name: NoLets
+  extra_files:
+    - glob: ./pushback.p8
+    - glob: ./config.yaml
 
 checksum:
   name_template: "checksums.txt"

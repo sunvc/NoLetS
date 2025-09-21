@@ -1,17 +1,19 @@
-[<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-alt="Pushback App"
-height="40">](https://apps.apple.com/us/app/id6615073345)
+
 # NoLetServer
 
 [中文](./README.md) | [English](./README_EN.md) | [한국어](./README_KR.md)
 
 ## インストールと実行
 
+| App Store | Server Works  |
+|--------|-------|
+| [<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Pushback App" height="40">](https://apps.apple.com/us/app/id6615073345) | [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/sunvc/NoLets-worker) |
+
 ### GitHub Releasesからダウンロード
 
 GitHub Releasesページからプリコンパイルされたバイナリをダウンロードできます：
 
-1. [GitHub Releases](https://github.com/sunvc/NoLeterver/releases) ページにアクセス
+1. [GitHub Releases](https://github.com/sunvc/NoLetserver/releases) ページにアクセス
 2. お使いのオペレーティングシステムとアーキテクチャに適したバージョンを選択：
    - Windows (amd64)
    - macOS (amd64, arm64)
@@ -22,10 +24,10 @@ GitHub Releasesページからプリコンパイルされたバイナリをダ�
 5. プログラムを実行：
    ```bash
    # Linux/macOS
-   ./NoLetServer --config your_config.yaml
+   ./NoLets --config your_config.yaml
    
    # Windows
-   NoLetServer.exe --config your_config.yaml
+   NoLets.exe --config your_config.yaml
    ```
 
 ### Dockerの使用
@@ -61,7 +63,7 @@ docker run -d --name NoLet-server \
 services:
   NoLetServer:
     image: ghcr.io/sunvc/nolet:latest
-    container_name: NoLetServer
+    container_name: NoLets
     restart: always
     ports:
       - "8080:8080"
@@ -83,35 +85,36 @@ docker-compose up -d
 
 ```yaml
 system:
-  user: ""                  # 基本認証ユーザー名
-  password: ""              # 基本認証パスワード
-  addr: "0.0.0.0:8080"      # サーバーリスニングアドレス
-  url_prefix: "/"           # サービスURLプレフィックス
-  data: "./data"            # データストレージディレクトリ
-  name: "NoLetServer"            # サービス名
-  dsn: ""                   # MySQL DSN接続文字列
-  cert: ""                  # TLS証明書パス
-  key: ""                   # TLS証明書秘密鍵パス
-  reduce_memory_usage: false # メモリ使用量を削減（CPU消費量が増加）
-  proxy_header: ""          # HTTPヘッダーのリモートIPアドレスソース
-  max_batch_push_count: -1  # バッチプッシュの最大数、-1は無制限
-  max_apns_client_count: 1  # APNsクライアント接続の最大数
-  concurrency: 262144       # 最大同時接続数（256 * 1024）
-  read_timeout: 3s          # 読み取りタイムアウト
-  write_timeout: 3s         # 書き込みタイムアウト
-  idle_timeout: 10s         # アイドルタイムアウト
-  admins: []                # 管理者IDリスト
-  debug: true               # デバッグモードを有効にする
-  expired: 0                # 音声の有効期限（秒）
-  icp_info: ""              # ICP登録情報
-  time_zone: "UTC"          # タイムゾーン設定
+  user: ""                         # 基本認証ユーザー名
+  password: ""                     # 基本認証パスワード
+  addr: "0.0.0.0:8080"             # サーバーリスニングアドレス
+  url_prefix: "/"                  # サービスURLプレフィックス
+  data: "./data"                   # データストレージディレクトリ
+  name: "NoLets"                   # サービス名
+  dsn: ""                          # MySQL DSN接続文字列
+  cert: ""                         # TLS証明書パス
+  key: ""                          # TLS証明書秘密鍵パス
+  reduce_memory_usage: false       # メモリ使用量を削減（CPU消費量が増加）
+  proxy_header: ""                 # HTTPヘッダーのリモートIPアドレスソース
+  max_batch_push_count: -1         # バッチプッシュの最大数、-1は無制限
+  max_apns_client_count: 1         # APNsクライアント接続の最大数
+  max_device_key_arr_length: 10    # キーリストの最大数
+  concurrency: 262144              # 最大同時接続数（256 * 1024）
+  read_timeout: 3s                 # 読み取りタイムアウト
+  write_timeout: 3s                # 書き込みタイムアウト
+  idle_timeout: 10s                # アイドルタイムアウト
+  admins: []                       # 管理者IDリスト
+  debug: true                      # デバッグモードを有効にする
+  expired: 0                       # 音声の有効期限（秒）
+  icp_info: ""                     # ICP登録情報
+  time_zone: "UTC"                 # タイムゾーン設定
 
 apple:
-  apnsPrivateKey: ""        # APNs秘密鍵の内容またはパス
-  topic: ""                 # APNs Topic
-  keyID: ""                 # APNs Key ID
-  teamID: ""                # APNs Team ID
-  develop: false            # APNs開発環境を有効にする
+  apnsPrivateKey: ""               # APNs秘密鍵の内容またはパス
+  topic: ""                        # APNs Topic
+  keyID: ""                        # APNs Key ID
+  teamID: ""                       # APNs Team ID
+  develop: false                   # APNs開発環境を有効にする
 ```
 
 ## サービス設定方法
@@ -157,13 +160,13 @@ apple:
 
 2. 設定ファイルパスを指定：
    ```bash
-   ./NoLetServer --config /path/to/your/config.yaml
+   ./NoLets --config /path/to/your/config.yaml
    # または省略形を使用
-   ./NoLetServer -c /path/to/your/config.yaml
+   ./NoLets -c /path/to/your/config.yaml
    ```
 
 3. 設定ファイルとコマンドラインパラメータの混合使用：
    ```bash
    # 設定ファイル内の設定はコマンドラインパラメータによって上書きされます
-   ./NoLetServer -c /path/to/your/config.yaml --debug --addr 127.0.0.1:8080
+   ./NoLets -c /path/to/your/config.yaml --debug --addr 127.0.0.1:8080
    ```

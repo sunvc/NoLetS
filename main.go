@@ -14,10 +14,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sunvc/NoLet/common"
-	"github.com/sunvc/NoLet/database"
-	"github.com/sunvc/NoLet/push"
-	"github.com/sunvc/NoLet/router"
+	"github.com/sunvc/NoLets/common"
+	"github.com/sunvc/NoLets/database"
+	"github.com/sunvc/NoLets/push"
+	"github.com/sunvc/NoLets/router"
 	"github.com/urfave/cli/v3"
 )
 
@@ -37,7 +37,7 @@ func main() {
 
 	common.StaticFS = &staticFS
 	app := &cli.Command{
-		Name:    "NoLetServer",
+		Name:    "NoLets",
 		Usage:   "Push Server For NoLet",
 		Flags:   common.Flags(),
 		Authors: []any{"to@uuneo.com"},

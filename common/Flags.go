@@ -132,6 +132,16 @@ func Flags() []cli.Flag {
 			},
 		},
 		&cli.IntFlag{
+			Name:    "max-device-key-arr-length",
+			Usage:   "Maximum number of deviceKey list length connections",
+			Sources: cli.EnvVars("NOLET_CONCURRENCY"),
+			Value:   10,
+			Action: func(ctx context.Context, command *cli.Command, b int) error {
+				LocalConfig.System.MaxDeviceKeyArrLength = b
+				return nil
+			},
+		},
+		&cli.IntFlag{
 			Name:    "concurrency",
 			Usage:   "Maximum number of concurrent connections",
 			Sources: cli.EnvVars("NOLET_SERVER_CONCURRENCY"),

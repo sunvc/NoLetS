@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sunvc/NoLet/common"
-	"github.com/sunvc/NoLet/database"
-	"github.com/sunvc/NoLet/push"
+	"github.com/sunvc/NoLets/common"
+	"github.com/sunvc/NoLets/database"
+	"github.com/sunvc/NoLets/push"
 	"github.com/sunvc/apns2"
 )
 

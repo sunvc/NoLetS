@@ -1,13 +1,12 @@
 package router
 
 import (
-	"log"
 	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sunvc/NoLet/common"
-	"github.com/sunvc/NoLet/controller"
+	"github.com/sunvc/NoLets/common"
+	"github.com/sunvc/NoLets/controller"
 )
 
 func Verification() gin.HandlerFunc {
@@ -75,9 +74,10 @@ func CheckDotParamMiddleware() gin.HandlerFunc {
 
 func CheckUserAgent() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		log.Println(ctx.Request.URL.String())
+		ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, 512)
+
 		userAgent := ctx.GetHeader(common.HeaderUserAgent)
-		if !strings.HasPrefix(userAgent, common.LocalConfig.System.Name) {
+		if !common.LocalConfig.System.Debug && !strings.HasPrefix(userAgent, common.LocalConfig.System.Name) {
 			ctx.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}

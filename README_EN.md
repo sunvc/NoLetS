@@ -1,17 +1,19 @@
-[<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-alt="Pushback App"
-height="40">](https://apps.apple.com/us/app/id6615073345)
+
 # NoLetServer
 
 [中文](./README.md) | [日本語](./README_JP.md) | [한국어](./README_KR.md)
 
 ## Installation and Running
 
+| App Store | Server Works  |
+|--------|-------|
+| [<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Pushback App" height="40">](https://apps.apple.com/us/app/id6615073345) | [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/sunvc/NoLets-worker) |
+
 ### Download from GitHub Releases
 
 You can download pre-compiled binaries from the GitHub Releases page:
 
-1. Visit the [GitHub Releases](https://github.com/sunvc/NoLeterver/releases) page
+1. Visit the [GitHub Releases](https://github.com/sunvc/NoLetserver/releases) page
 2. Choose the appropriate version for your operating system and architecture:
    - Windows (amd64)
    - macOS (amd64, arm64)
@@ -22,10 +24,10 @@ You can download pre-compiled binaries from the GitHub Releases page:
 5. Run the program:
    ```bash
    # Linux/macOS
-   ./NoLetServer --config your_config.yaml
+   ./NoLets --config your_config.yaml
    
    # Windows
-   NoLetServer.exe --config your_config.yaml
+   NoLets.exe --config your_config.yaml
    ```
 
    Common parameters:
@@ -69,7 +71,7 @@ The `compose.yaml` file in the project root directory is already configured to u
 services:
   NoLetServer:
     image: ghcr.io/sunvc/nolet:latest
-    container_name: NoLetServer
+    container_name: NoLets
     restart: always
     ports:
       - "8080:8080"
@@ -96,7 +98,7 @@ system:
   addr: "0.0.0.0:8080"      # Server listening address
   url_prefix: "/"           # Service URL prefix
   data: "./data"            # Data storage directory
-  name: "NoLetServer"            # Service name
+  name: "NoLets"            # Service name
   dsn: ""                   # MySQL DSN connection string
   cert: ""                  # TLS certificate path
   key: ""                   # TLS certificate private key path
@@ -104,6 +106,7 @@ system:
   proxy_header: ""          # Remote IP address source in HTTP header
   max_batch_push_count: -1  # Maximum number of batch pushes, -1 means no limit
   max_apns_client_count: 1  # Maximum number of APNs client connections
+  max_device_key_arr_length: 10    # maximum number of key lists
   concurrency: 262144       # Maximum number of concurrent connections (256 * 1024)
   read_timeout: 3s          # Read timeout
   write_timeout: 3s         # Write timeout
@@ -165,13 +168,14 @@ The service can be configured in the following three ways, with priority from hi
 
 2. Specify the configuration file path:
    ```bash
-   ./NoLetServer --config /path/to/your/config.yaml
+   ./NoLets --config /path/to/your/config.yaml
    # Or use the shorthand
-   ./NoLetServer -c /path/to/your/config.yaml
+   ./NoLets -c /path/to/your/config.yaml
    ```
 
 3. Mixed use of configuration file and command-line parameters:
    ```bash
    # Settings in the configuration file will be overridden by command-line parameters
-   ./NoLetServer -c /path/to/your/config.yaml --debug --addr 127.0.0.1:8080
+   ./NoLets -c /path/to/your/config.yaml --debug --addr 127.0.0.1:8080
    ```
+

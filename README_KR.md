@@ -1,17 +1,19 @@
-[<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-alt="Pushback App"
-height="40">](https://apps.apple.com/us/app/id6615073345)
+
 # NoLetServer
 
 [中文](./README.md) | [English](./README_EN.md) | [日本語](./README_JP.md)
 
 ## 설치 및 실행
 
+| App Store | Server Works  |
+|--------|-------|
+| [<img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Pushback App" height="40">](https://apps.apple.com/us/app/id6615073345) | [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/sunvc/NoLets-worker) |
+
 ### GitHub Releases에서 다운로드
 
 GitHub Releases 페이지에서 미리 컴파일된 바이너리를 다운로드할 수 있습니다:
 
-1. [GitHub Releases](https://github.com/sunvc/NoLeterver/releases) 페이지 방문
+1. [GitHub Releases](https://github.com/sunvc/NoLetserver/releases) 페이지 방문
 2. 운영 체제 및 아키텍처에 맞는 버전 선택:
    - Windows (amd64)
    - macOS (amd64, arm64)
@@ -22,10 +24,10 @@ GitHub Releases 페이지에서 미리 컴파일된 바이너리를 다운로드
 5. 프로그램 실행:
    ```bash
    # Linux/macOS
-   ./NoLetServer --config your_config.yaml
+   ./NoLets --config your_config.yaml
    
    # Windows
-   NoLetServer.exe --config your_config.yaml
+   NoLets.exe --config your_config.yaml
    ```
 
 ### Docker 사용
@@ -61,7 +63,7 @@ docker run -d --name NoLet-server \
 services:
   NoLetServer:
     image: ghcr.io/sunvc/nolet:latest
-    container_name: NoLetServer
+    container_name: NoLets
     restart: always
     ports:
       - "8080:8080"
@@ -83,29 +85,30 @@ docker-compose up -d
 
 ```yaml
 system:
-  user: ""                  # 기본 인증 사용자 이름
-  password: ""              # 기본 인증 비밀번호
-  addr: "0.0.0.0:8080"      # 서버 리스닝 주소
-  url_prefix: "/"           # 서비스 URL 접두사
-  data: "./data"            # 데이터 저장 디렉토리
-  name: "NoLetServer"            # 서비스 이름
-  dsn: ""                   # MySQL DSN 연결 문자열
-  cert: ""                  # TLS 인증서 경로
-  key: ""                   # TLS 인증서 개인 키 경로
-  reduce_memory_usage: false # 메모리 사용량 감소(CPU 사용량 증가)
-  proxy_header: ""          # HTTP 헤더의 원격 IP 주소 소스
-  max_batch_push_count: -1  # 배치 푸시 최대 수, -1은 무제한
-  max_apns_client_count: 1  # APNs 클라이언트 연결 최대 수
-  concurrency: 262144       # 최대 동시 연결 수(256 * 1024)
-  read_timeout: 3s          # 읽기 타임아웃
-  write_timeout: 3s         # 쓰기 타임아웃
-  idle_timeout: 10s         # 유휴 타임아웃
-  admins: []                # 관리자 ID 목록
-  debug: true               # 디버그 모드 활성화
-  expired: 0                # 음성 만료 시간(초)
-  icp_info: ""              # ICP 등록 정보
-  time_zone: "UTC"          # 시간대 설정
-
+  user: ""                         # 기본 인증 사용자 이름
+  password: ""                     # 기본 인증 비밀번호
+  addr: "0.0.0.0:8080"             # 서버 리스닝 주소
+  url_prefix: "/"                  # 서비스 URL 접두사
+  data: "./data"                   # 데이터 저장 디렉토리
+  name: "NoLets"                   # 서비스 이름
+  dsn: ""                          # MySQL DSN 연결 문자열
+  cert: ""                         # TLS 인증서 경로
+  key: ""                          # TLS 인증서 개인 키 경로
+  reduce_memory_usage: false       # 메모리 사용량 감소(CPU 사용량 증가)
+  proxy_header: ""                 # HTTP 헤더의 원격 IP 주소 소스
+  max_batch_push_count: -1         # 배치 푸시 최대 수, -1은 무제한
+  max_apns_client_count: 1         # APNs 클라이언트 연결 최대 수
+  max_device_key_arr_length: 10    # 키 목록의 최대 수
+  concurrency: 262144              # 최대 동시 연결 수(256 * 1024)
+  read_timeout: 3s                 # 읽기 타임아웃
+  write_timeout: 3s                # 쓰기 타임아웃
+  idle_timeout: 10s                # 유휴 타임아웃
+  admins: []                       # 관리자 ID 목록
+  debug: true                      # 디버그 모드 활성화
+  expired: 0                       # 음성 만료 시간(초)
+  icp_info: ""                     # ICP 등록 정보
+  time_zone: "UTC"                 # 시간대 설정
+       
 apple:
   apnsPrivateKey: ""        # APNs 개인 키 내용 또는 경로
   topic: ""                 # APNs Topic
@@ -157,13 +160,13 @@ apple:
 
 2. 구성 파일 경로 지정:
    ```bash
-   ./NoLetServer --config /path/to/your/config.yaml
+   ./NoLets --config /path/to/your/config.yaml
    # 또는 약식 사용
-   ./NoLetServer -c /path/to/your/config.yaml
+   ./NoLets -c /path/to/your/config.yaml
    ```
 
 3. 구성 파일과 명령줄 매개변수 혼합 사용:
    ```bash
    # 구성 파일의 설정은 명령줄 매개변수에 의해 재정의됩니다
-   ./NoLetServer -c /path/to/your/config.yaml --debug --addr 127.0.0.1:8080
+   ./NoLets -c /path/to/your/config.yaml --debug --addr 127.0.0.1:8080
    ```
