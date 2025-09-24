@@ -27,5 +27,6 @@ func Home(c *gin.Context) {
 		"URL":     template.URL(url),
 		"LOGORAW": template.HTML(common.LOGORAW),
 		"LOGOSVG": template.URL(common.LogoSvgImage("ff00000f", false)),
+		"DOCS":    "https://wiki.wzs.app",
 	})
 }

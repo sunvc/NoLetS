@@ -1,7 +1,6 @@
 package router
 
 import (
-	"log"
 	"net/http"
 	"strings"
 
@@ -75,9 +74,10 @@ func CheckDotParamMiddleware() gin.HandlerFunc {
 
 func CheckUserAgent() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		log.Println(ctx.Request.URL.String())
+		ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, 512)
+
 		userAgent := ctx.GetHeader(common.HeaderUserAgent)
-		if !strings.HasPrefix(userAgent, common.LocalConfig.System.Name) {
+		if !common.LocalConfig.System.Debug && !strings.HasPrefix(userAgent, common.LocalConfig.System.Name) {
 			ctx.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}

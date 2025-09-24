@@ -9,6 +9,7 @@ func SetupRouter(router *gin.Engine) {
 
 	router.GET("/", controller.Home)
 	router.GET("/info", controller.Info)
+
 	// App内部使用
 	router.GET("/ping", controller.Ping)
 	router.GET("/health", controller.Health)
