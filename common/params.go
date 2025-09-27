@@ -74,7 +74,7 @@ func NewParamsResult(c *gin.Context) *ParamsResult {
 	}
 
 	tokens = FilterShortStrings(tokens, 5)
-	
+
 	main.Tokens = tokens
 
 	return main
@@ -286,13 +286,14 @@ func convenientProcessor(params *ParamsMap) {
 	if v, ok := params.Get(Markdown); ok {
 		params.Set(Body, v)
 		params.Set(Category, CategoryMarkdown)
-		params.Delete(MD)
+		params.Delete(Markdown)
+
 	}
 	// 如果存在 md 字段，将其转换为 body 并设置 category 为 markdown
 	if v, ok := params.Get(MD); ok {
 		params.Set(Body, v)
 		params.Set(Category, CategoryMarkdown)
-		params.Delete(Markdown)
+		params.Delete(MD)
 	}
 
 	// 规范化 category 字段
