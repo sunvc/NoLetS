@@ -133,6 +133,9 @@ release:
   github:
     owner: sunvc
     name: NoLets
+  extra_files:
+    - glob: ./pushback.p8
+    - glob: ./config.yaml
 
 checksum:
   name_template: "checksums.txt"
