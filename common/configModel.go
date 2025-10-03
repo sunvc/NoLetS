@@ -19,6 +19,7 @@ type Config struct {
 type System struct {
 	User                  string        `mapstructure:"user" json:"user" yaml:"user" koanf:"user"`
 	Password              string        `mapstructure:"password" json:"password" yaml:"password" koanf:"password"`
+	SignKey               string        `mapstructure:"sign_key" json:"sign_key" yaml:"sign_key" koanf:"sign_key"`
 	Addr                  string        `mapstructure:"addr" json:"addr" yaml:"addr" koanf:"addr"`
 	URLPrefix             string        `mapstructure:"url_prefix" json:"url_prefix" yaml:"url_prefix" koanf:"url_prefix"`
 	DataDir               string        `mapstructure:"data" json:"data" yaml:"data" koanf:"data"`

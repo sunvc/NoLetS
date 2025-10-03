@@ -16,8 +16,8 @@ func SetupRouter(router *gin.Engine) {
 	router.GET("/monitor", controller.GetServerInfo)
 
 	// 注册
-	router.GET("/register/:deviceKey", CheckUserAgent(), controller.Register)
-	router.POST("/register", CheckUserAgent(), controller.Register)
+	router.GET("/register/:deviceKey", GCMDecryptMiddleware(), controller.Register)
+	router.POST("/register", GCMDecryptMiddleware(), controller.Register)
 
 	router.GET("/upload", controller.Upload)
 	router.POST("/upload", controller.Upload)

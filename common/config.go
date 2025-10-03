@@ -9,6 +9,7 @@ var LocalConfig = &Config{
 	System: System{
 		User:                  "",
 		Password:              "",
+		SignKey:               "",
 		Addr:                  "0.0.0.0:8080",
 		URLPrefix:             "/",
 		DataDir:               "./data",

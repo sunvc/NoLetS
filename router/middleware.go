@@ -1,8 +1,14 @@
 package router
 
 import (
+	"crypto/aes"
+	"crypto/cipher"
+	"encoding/base64"
+	"log"
 	"net/http"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sunvc/NoLets/common"
@@ -72,15 +78,116 @@ func CheckDotParamMiddleware() gin.HandlerFunc {
 	}
 }
 
-func CheckUserAgent() gin.HandlerFunc {
-	return func(ctx *gin.Context) {
-		ctx.Request.Body = http.MaxBytesReader(ctx.Writer, ctx.Request.Body, 512)
+func GCMDecryptMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
 
-		userAgent := ctx.GetHeader(common.HeaderUserAgent)
-		if !common.LocalConfig.System.Debug && !strings.HasPrefix(userAgent, common.LocalConfig.System.Name) {
-			ctx.AbortWithStatus(http.StatusUnauthorized)
+		c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, 512)
+
+		userAgent := c.GetHeader(common.HeaderUserAgent)
+		if !strings.HasPrefix(userAgent, common.LocalConfig.System.Name) {
+			c.AbortWithStatusJSON(http.StatusOK, common.Failed(
+				http.StatusUnauthorized,
+				"SB",
+			))
 			return
 		}
-		ctx.Next()
+
+		key := []byte(common.LocalConfig.System.SignKey)
+		if len(key) == 0 {
+			c.Next()
+			return
+		}
+		header := c.GetHeader("X-Signature")
+		if header == "" {
+			c.AbortWithStatusJSON(http.StatusOK, common.Failed(
+				http.StatusUnauthorized,
+				"missing signature",
+			))
+			return
+		}
+
+		// Base64 URL Safe -> 标准 Base64
+		header = strings.ReplaceAll(header, "-", "+")
+		header = strings.ReplaceAll(header, "_", "/")
+		if m := len(header) % 4; m != 0 {
+			header += strings.Repeat("=", 4-m)
+		}
+
+		data, err := base64.StdEncoding.DecodeString(header)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusOK, common.Failed(
+				http.StatusUnauthorized,
+				"missing signature",
+			))
+			return
+		}
+
+		nonceSize := 12
+		tagSize := 16
+		if len(data) <= nonceSize+tagSize {
+
+			c.AbortWithStatusJSON(http.StatusOK, common.Failed(
+				http.StatusUnauthorized,
+				"missing signature",
+			))
+			return
+		}
+
+		nonce := data[:nonceSize]
+		ciphertext := data[nonceSize : len(data)-tagSize]
+		tag := data[len(data)-tagSize:]
+
+		block, err := aes.NewCipher(key)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusOK, common.Failed(
+				http.StatusUnauthorized,
+				"missing signature",
+			))
+			return
+		}
+
+		aesgcm, err := cipher.NewGCM(block)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusOK, common.Failed(
+				http.StatusUnauthorized,
+				"missing signature",
+			))
+			return
+		}
+
+		// CryptoKit 是把 tag 单独放在尾部，需要拼接到 ciphertext
+		decrypted, err := aesgcm.Open(nil, nonce, append(ciphertext, tag...), nil)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusOK, common.Failed(
+				http.StatusUnauthorized,
+				"missing signature",
+			))
+			return
+		}
+
+		timestampStr := string(decrypted)
+
+		timestamp, err := strconv.ParseInt(timestampStr, 10, 64)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusOK, common.Failed(
+				http.StatusUnauthorized,
+				"missing signature",
+			))
+			return
+		}
+
+		now := time.Now().Unix()
+		if now-timestamp > 10 || timestamp-now > 10 {
+			c.AbortWithStatusJSON(http.StatusOK, common.Failed(
+				http.StatusUnauthorized,
+				"missing signature",
+			))
+			return
+		}
+		log.Println("Signature verification successful！")
+		// 解密成功，存入 context
+		c.Set("decrypted", decrypted)
+		c.Next()
+
 	}
 }

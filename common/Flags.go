@@ -102,6 +102,17 @@ func Flags() []cli.Flag {
 			},
 		},
 		&cli.StringFlag{
+			Name:    "sign-key",
+			Usage:   "App Sign Key",
+			Sources: cli.EnvVars("NOLET_SIGN_KEY"),
+			Aliases: []string{"sk"},
+			Value:   "",
+			Action: func(ctx context.Context, command *cli.Command, s string) error {
+				LocalConfig.System.SignKey = s
+				return nil
+			},
+		},
+		&cli.StringFlag{
 			Name:    "proxy-header",
 			Usage:   "The remote IP address used by the NOLET server http header",
 			Sources: cli.EnvVars("NOLET_SERVER_PROXY_HEADER"),
