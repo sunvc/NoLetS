@@ -49,7 +49,7 @@ func Register(c *gin.Context) {
 		return
 	}
 
-	if len(device.Token) != 64 {
+	if len(device.Token) != 64 && len(device.Token) != 36 {
 		c.JSON(http.StatusOK, common.Failed(http.StatusBadRequest, "Invalid deviceToken"))
 		return
 	}
