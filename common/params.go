@@ -20,11 +20,11 @@ type ParamsMap = orderedmap.OrderedMap[string, interface{}]
 // ParamsResult 结构体用于存储和管理请求参数
 // 使用有序映射存储参数，保证参数的处理顺序
 type ParamsResult struct {
-	Params  *ParamsMap
-	Results []*ParamsMap
-	Tokens  []string
-	Keys    []string
-	IsNan   bool
+	Params   *ParamsMap
+	Results  []*ParamsMap
+	Tokens   []string
+	Keys     []string
+	PushType int
 }
 
 // NewParamsResult 创建新的参数结果对象
@@ -41,8 +41,12 @@ func NewParamsResult(c *gin.Context) *ParamsResult {
 		Tokens:  []string{},
 	}
 	main.HandlerParamsToMapOrder(c)
-	main.SetDefault()
-	main.IsNan = ParamsNan(main)
+	main.PushType = ParamsNanAndDefault(main)
+
+	if main.PushType == -1 {
+		return nil
+	}
+
 	results, err := SplitPayloadIfExceedsLimit(main.Params)
 	if err == nil {
 		main.Results = results
@@ -119,47 +123,6 @@ func PMGet(params *ParamsMap, key string) string {
 		return fmt.Sprint(value)
 	}
 	return ""
-}
-
-// SetDefault 设置参数的默认值
-// 主要功能：
-// 1. 为未设置或为空的参数设置默认值
-// 2. 处理自动复制、消息级别、消息分类等参数的默认值
-// 3. 为消息生成唯一ID
-func (p *ParamsResult) SetDefault() {
-	// setDefault 内部函数用于设置默认值
-	// params: 参数映射
-	// key: 需要设置默认值的键
-	// other: 设置默认值的回调函数
-	setDefault := func(params *ParamsMap, key string, other func(string, interface{})) {
-		newKey := p.NormalizeKey(key)
-		if value, ok := params.Get(newKey); !ok || value == nil || len(fmt.Sprint(value)) == 0 {
-			other(newKey, value)
-		}
-	}
-
-	// 处理默认值
-	// 设置自动复制功能的默认值
-	setDefault(p.Params, AutoCopy, func(key string, value interface{}) {
-		p.Params.Set(key, AutoCopyDefault)
-	})
-
-	// 设置消息级别的默认值
-	setDefault(p.Params, Level, func(key string, value interface{}) {
-		p.Params.Set(key, LevelDefault)
-	})
-
-	// 设置消息分类的默认值
-	setDefault(p.Params, Category, func(key string, value interface{}) {
-		p.Params.Set(key, CategoryDefault)
-	})
-
-	// 设置消息ID的默认值（使用UUID）
-	setDefault(p.Params, ID, func(key string, value interface{}) {
-		messageID, _ := uuid.NewUUID()
-		p.Params.Set(key, messageID.String())
-	})
-
 }
 
 // HandlerParamsToMapOrder 处理请求参数并转换为有序映射
@@ -319,7 +282,7 @@ func convenientProcessor(params *ParamsMap) {
 	}
 }
 
-func ParamsNan(paramsResult *ParamsResult) bool {
+func ParamsNanAndDefault(paramsResult *ParamsResult) (resultType int) {
 	isEmpty := func(v interface{}) bool {
 		s, ok := v.(string)
 		if !ok {
@@ -332,17 +295,60 @@ func ParamsNan(paramsResult *ParamsResult) bool {
 	subTitle, subTitleOk := paramsResult.Params.Get(Subtitle)
 	body, bodyOk := paramsResult.Params.Get(Body)
 	cipherText, cipherTextOk := paramsResult.Params.Get(CipherText)
+	id, idOK := paramsResult.Params.Get(ID)
 
 	titleNan := !titleOk || isEmpty(title)
 	subTitleNan := !subTitleOk || isEmpty(subTitle)
 	bodyNan := !bodyOk || isEmpty(body)
 	cipherNan := !cipherTextOk || isEmpty(cipherText)
+	idNan := !idOK || isEmpty(id)
 
-	if bodyNan && !cipherNan {
-		paramsResult.Params.Set(Body, "--End-to-end encryption--")
+	if titleNan && subTitleNan && bodyNan && cipherNan && idNan {
+		resultType = -1
+		return
 	}
 
-	return titleNan && subTitleNan && bodyNan && cipherNan
+	if (titleNan && subTitleNan && bodyNan && cipherNan) && !idNan {
+		resultType = 0
+	}
+
+	if !(titleNan && subTitleNan && bodyNan && cipherNan) {
+		resultType = 1
+	}
+
+	// setDefault 内部函数用于设置默认值
+	// params: 参数映射
+	// key: 需要设置默认值的键
+	// other: 设置默认值的回调函数
+	setDefault := func(params *ParamsMap, key string, other func(string, interface{})) {
+		newKey := paramsResult.NormalizeKey(key)
+		if value, ok := params.Get(newKey); !ok || value == nil || len(fmt.Sprint(value)) == 0 {
+			other(newKey, value)
+		}
+	}
+
+	// 处理默认值
+	// 设置自动复制功能的默认值
+	setDefault(paramsResult.Params, AutoCopy, func(key string, value interface{}) {
+		paramsResult.Params.Set(key, AutoCopyDefault)
+	})
+
+	// 设置消息级别的默认值
+	setDefault(paramsResult.Params, Level, func(key string, value interface{}) {
+		paramsResult.Params.Set(key, LevelDefault)
+	})
+
+	// 设置消息分类的默认值
+	setDefault(paramsResult.Params, Category, func(key string, value interface{}) {
+		paramsResult.Params.Set(key, CategoryDefault)
+	})
+
+	// 设置消息ID的默认值（使用UUID）
+	setDefault(paramsResult.Params, ID, func(key string, value interface{}) {
+		messageID, _ := uuid.NewUUID()
+		paramsResult.Params.Set(key, messageID.String())
+	})
+	return
 }
 
 func SplitPayloadIfExceedsLimit(basePayload *ParamsMap) ([]*ParamsMap, error) {

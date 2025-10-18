@@ -14,6 +14,11 @@ import (
 
 var NotPushedDataList sync.Map
 
+var oneDo sync.Once
+
+func init() {
+	oneDo.Do(CirclePush)
+}
 func CirclePush() {
 	go func() {
 		ticker := time.NewTicker(10 * time.Minute)

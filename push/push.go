@@ -76,12 +76,7 @@ func BatchPush(params *common.ParamsResult, pushType apns2.EPushType) error {
 		mu     sync.Mutex
 		wg     sync.WaitGroup
 	)
-
-	// 如果 title, subtitle 和 body 都为空，设置静默推送模式
-	if params.IsNan {
-		pushType = apns2.PushTypeBackground
-	}
-
+	
 	for _, token := range params.Tokens {
 		if len(params.Results) > 0 {
 			for _, param := range params.Results {
