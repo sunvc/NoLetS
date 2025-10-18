@@ -47,10 +47,7 @@ func main() {
 				common.LocalConfig.SetConfig(configPath)
 			}
 
-			common.LocalConfig.System.Version = version
-			common.LocalConfig.System.BuildDate = buildDate
-			common.LocalConfig.System.CommitID = commitID
-
+			common.SetDefaultVersionOrCommID(version, buildDate, commitID)
 			database.InitDatabase()
 
 			systemConfig := common.LocalConfig.System
@@ -84,7 +81,7 @@ func main() {
 				}
 
 			}
-
+			log.Println(common.LocalConfig)
 			server := &http.Server{
 				Addr:           systemConfig.Addr,
 				Handler:        engine,

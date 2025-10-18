@@ -7,7 +7,6 @@
     <link rel="icon" href="logo.png" />
     <link rel="apple-touch-icon" href="logo.png"/>
     <meta name="theme-color" content="#4D6BFE"/>
-
     <meta property="og:title" content="无字书 - Smart Message Push"/>
     <meta
             name="description"
@@ -25,29 +24,19 @@
     <!-- Add more modern fonts and icon libraries -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap"
-            rel="stylesheet"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
-    />
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
+
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-    />
+    <script>
+        (function() {
+            try {
+                var savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
+
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap"); /* Splash Screen */
 
@@ -888,7 +877,7 @@
                         target="_blank"
                         aria-label="GitHub Project"
                 >
-                    <i class="bi bi-github"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><mask id="SVGtXXaGeHA" width="24" height="24" x="0" y="0"><g fill="#fff"><ellipse cx="9.5" cy="9" rx="1.5" ry="1"/><ellipse cx="14.5" cy="9" rx="1.5" ry="1"/></g></mask><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="32" stroke-dashoffset="32" d="M12 4c1.67 0 2.61 0.4 3 0.5c0.53 -0.43 1.94 -1.5 3.5 -1.5c0.34 1 0.29 2.22 0 3c0.75 1 1 2 1 3.5c0 2.19 -0.48 3.58 -1.5 4.5c-1.02 0.92 -2.11 1.37 -3.5 1.5c0.65 0.54 0.5 1.87 0.5 2.5c0 0.73 0 3 0 3M12 4c-1.67 0 -2.61 0.4 -3 0.5c-0.53 -0.43 -1.94 -1.5 -3.5 -1.5c-0.34 1 -0.29 2.22 0 3c-0.75 1 -1 2 -1 3.5c0 2.19 0.48 3.58 1.5 4.5c1.02 0.92 2.11 1.37 3.5 1.5c-0.65 0.54 -0.5 1.87 -0.5 2.5c0 0.73 0 3 0 3"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.7s" values="32;0"/></path><path stroke-dasharray="10" stroke-dashoffset="10" d="M9 19c-1.406 0-2.844-.563-3.688-1.188C4.47 17.188 4.22 16.157 3 15.5"><animate attributeName="d" dur="3s" repeatCount="indefinite" values="M9 19c-1.406 0-2.844-.563-3.688-1.188C4.47 17.188 4.22 16.157 3 15.5;M9 19c-1.406 0-3-.5-4-.5-.532 0-1 0-2-.5;M9 19c-1.406 0-2.844-.563-3.688-1.188C4.47 17.188 4.22 16.157 3 15.5"/><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.8s" dur="0.2s" values="10;0"/></path></g><rect width="8" height="4" x="8" y="11" fill="currentColor" mask="url(#SVGtXXaGeHA)"><animate attributeName="y" dur="10s" keyTimes="0;0.45;0.46;0.54;0.55;1" repeatCount="indefinite" values="11;11;7;7;11;11"/></rect></svg>
                 </a>
                 <a
                         href="https://t.me/PushToMe"
@@ -896,7 +885,7 @@
                         target="_blank"
                         aria-label="Telegram Channel"
                 >
-                    <i class="bi bi-telegram"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="20" stroke-dashoffset="20" d="M21 5l-2.5 15M21 5l-12 8.5"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="20;0"/></path><path stroke-dasharray="24" stroke-dashoffset="24" d="M21 5l-19 7.5"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="24;0"/></path><path stroke-dasharray="14" stroke-dashoffset="14" d="M18.5 20l-9.5 -6.5"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.3s" values="14;0"/></path><path stroke-dasharray="10" stroke-dashoffset="10" d="M2 12.5l7 1"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.3s" values="10;0"/></path><path stroke-dasharray="8" stroke-dashoffset="8" d="M12 16l-3 3M9 13.5l0 5.5"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.7s" dur="0.3s" values="8;0"/></path></g></svg>
                 </a>
                 <button
                         class="theme-toggle"
@@ -940,29 +929,36 @@
         <div class="container" style="padding-top: 70px">
             <div class="features-grid">
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
-                    <div class="feature-icon"><i class="bi bi-robot icon-color"></i></div>
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M14 15h3v1h-3zm-3 0h2v1h-2zm-4 0h3v1H7z"/><path fill="currentColor" d="M19 7h-1V6h-5V3h-2v3H6v1H5v1H4v10h1v1h1v1h12v-1h1v-1h1V8h-1zm-2 10v1H7v-1H6V9h1V8h10v1h1v8zm6-6v5h-1v1h-1v-7h1v1zM2 10h1v7H2v-1H1v-5h1z"/><path fill="currentColor" d="M14 10h3v3h-3zm-7 0h3v3H7z"/></svg>
+                    </div>
                     <h3>Smart AI Processing</h3>
                     <p>
-                        Automatic summarization, translation, content optimization,
-                        improving message quality
+                        Automatic summarization, translation, content optimization
                     </p>
                 </div>
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-icon"><i class="bi bi-shield-lock icon-color"></i></div>
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M10.5 15h3l-.575-3.225q.5-.25.788-.725T14 10q0-.825-.587-1.412T12 8t-1.412.588T10 10q0 .575.288 1.05t.787.725zm1.5 7q-3.475-.875-5.738-3.988T4 11.1V5l8-3l8 3v6.1q0 3.8-2.262 6.913T12 22m0-2.1q2.6-.825 4.3-3.3t1.7-5.5V6.375l-6-2.25l-6 2.25V11.1q0 3.025 1.7 5.5t4.3 3.3m0-7.9"/></svg>
+                    </div>
                     <h3>End-to-End Encryption</h3>
                     <p>
                         AES-256 encrypted transmission, ensuring absolute data security
                     </p>
                 </div>
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="250">
-                    <div class="feature-icon"><i class="bi bi-file-text icon-color"></i></div>
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 16 16"><g fill="currentColor"><path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5M5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1z"/><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1"/></g></svg>
+                    </div>
                     <h3>Long Message Processing</h3>
                     <p>
                         Smart segmentation and merging, supporting content of any length
                     </p>
                 </div>
                 <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-icon"><i class="bi bi-gear icon-color" ></i></div>
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 16 16"><g fill="currentColor"><path d="M7.293 1.5a1 1 0 0 1 1.414 0L11 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l2.354 2.353a.5.5 0 0 1-.708.708L8 2.207l-5 5V13.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 2 13.5V8.207l-.646.647a.5.5 0 1 1-.708-.708z"/><path d="M11.886 9.46c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.044c-.613-.181-.613-1.049 0-1.23l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0a1.5 1.5 0 0 0 3 0"/></g></svg>
+                    </div>
                     <h3>Custom Server</h3>
                     <p>
                         Support for private deployment, flexible push rule configuration
@@ -970,6 +966,7 @@
                 </div>
             </div>
         </div>
+        <div style="height: 50px"></div>
     </section>
 
     <footer id="about">
@@ -1004,14 +1001,24 @@
 
 
 <script>
+
+    var iframe = document.createElement("iframe");
+    iframe.style.display = "none";
+    iframe.src = "pb:\/\/";
+    document.body.appendChild(iframe);
+
+
+
     document.addEventListener("DOMContentLoaded", function () {
         // Initialize AOS animation library
-        AOS.init({
-            duration: 800,
-            easing: "ease-in-out",
-            once: true,
-            mirror: false,
-        });
+        if (window.AOS) {
+            AOS.init({
+                duration: 800,
+                easing: "ease-in-out",
+                once: true,
+                mirror: false,
+            });
+        }
 
         // Get server address
 
